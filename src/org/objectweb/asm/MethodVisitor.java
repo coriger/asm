@@ -50,7 +50,9 @@ package org.objectweb.asm;
  * <tt>visitLocalVariable</tt>, <tt>visitLocalVariableAnnotation</tt> and
  * <tt>visitLineNumber</tt> methods must be called <i>after</i> the labels
  * passed as arguments have been visited.
- * 
+ *
+ * Java方法的访问器
+ *
  * @author Eric Bruneton
  */
 public abstract class MethodVisitor {
@@ -223,6 +225,7 @@ public abstract class MethodVisitor {
 
     /**
      * Starts the visit of the method's code, if any (i.e. non abstract method).
+     * 范文方法的字节代码
      */
     public void visitCode() {
         if (mv != null) {
@@ -318,6 +321,8 @@ public abstract class MethodVisitor {
 
     /**
      * Visits a zero operand instruction.
+     *
+     * 无操作数的指令操作
      * 
      * @param opcode
      *            the opcode of the instruction to be visited. This opcode is
@@ -369,7 +374,9 @@ public abstract class MethodVisitor {
     /**
      * Visits a local variable instruction. A local variable instruction is an
      * instruction that loads or stores the value of a local variable.
-     * 
+     *
+     * 局部变量相关指令操作 比如*LOAD *STORE
+     *
      * @param opcode
      *            the opcode of the local variable instruction to be visited.
      *            This opcode is either ILOAD, LLOAD, FLOAD, DLOAD, ALOAD,
@@ -405,16 +412,18 @@ public abstract class MethodVisitor {
     /**
      * Visits a field instruction. A field instruction is an instruction that
      * loads or stores the value of a field of an object.
+     *
+     * 字段相关指令操作
      * 
-     * @param opcode
+     * @param opcode  字段相关指令
      *            the opcode of the type instruction to be visited. This opcode
      *            is either GETSTATIC, PUTSTATIC, GETFIELD or PUTFIELD.
-     * @param owner
+     * @param owner 字段所属类内部名
      *            the internal name of the field's owner class (see
      *            {@link Type#getInternalName() getInternalName}).
-     * @param name
+     * @param name  字段名称
      *            the field's name.
-     * @param desc
+     * @param desc  字段描述符
      *            the field's descriptor (see {@link Type Type}).
      */
     public void visitFieldInsn(int opcode, String owner, String name,
@@ -872,6 +881,7 @@ public abstract class MethodVisitor {
      * Visits the end of the method. This method, which is the last one to be
      * called, is used to inform the visitor that all the annotations and
      * attributes of the method have been visited.
+     * 表示一个方法访问的结束
      */
     public void visitEnd() {
         if (mv != null) {

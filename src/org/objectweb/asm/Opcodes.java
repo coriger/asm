@@ -44,12 +44,13 @@ package org.objectweb.asm;
 public interface Opcodes {
 
     // ASM API versions
-
+    // 100左位移16位  100 0000000000000000 = 2的18次方
     int ASM4 = 4 << 16 | 0 << 8 | 0;
+    // 101左位移16位  101 0000000000000000 = 2的18次方 + 2的16次方
     int ASM5 = 5 << 16 | 0 << 8 | 0;
 
     // versions
-
+    // class文件版本号
     int V1_1 = 3 << 16 | 45;
     int V1_2 = 0 << 16 | 46;
     int V1_3 = 0 << 16 | 47;
@@ -206,19 +207,19 @@ public interface Opcodes {
     // int ALOAD_1 = 43; // -
     // int ALOAD_2 = 44; // -
     // int ALOAD_3 = 45; // -
-    int IALOAD = 46; // visitInsn
-    int LALOAD = 47; // -
-    int FALOAD = 48; // -
-    int DALOAD = 49; // -
-    int AALOAD = 50; // -
-    int BALOAD = 51; // -
-    int CALOAD = 52; // -
-    int SALOAD = 53; // -
-    int ISTORE = 54; // visitVarInsn
-    int LSTORE = 55; // -
-    int FSTORE = 56; // -
-    int DSTORE = 57; // -
-    int ASTORE = 58; // -
+    int IALOAD = 46; // visitInsn 从数组中加载一个 int 类型数据到操作数栈
+    int LALOAD = 47; // - 从数组中加载一个 long 类型数据到操作数栈
+    int FALOAD = 48; // - 从数组中加载一个 float 类型数据到操作数栈
+    int DALOAD = 49; // - 从数组中加载一个 double 类型数据到操作数栈
+    int AALOAD = 50; // - 从数组中加载一个 reference 类型数据到操作数栈
+    int BALOAD = 51; // - 从数组中读取 byte 或者 boolean 类型的数据
+    int CALOAD = 52; // - 从数组中加载一个 char 类型数据到操作数栈
+    int SALOAD = 53; // - 从数组中加载一个 short 类型数据到操作数栈
+    int ISTORE = 54; // visitVarInsn  将一个 int 类型数据保存到局部变量表中
+    int LSTORE = 55; // - 将一个 long 类型数据保存到局部变量表中
+    int FSTORE = 56; // - 将一个 float 类型数据保存到局部变量表中
+    int DSTORE = 57; // - 将一个 double 类型数据保存到局部变量表中
+    int ASTORE = 58; // - 将一个 reference 类型数据保存到局部变量表中
     // int ISTORE_0 = 59; // -
     // int ISTORE_1 = 60; // -
     // int ISTORE_2 = 61; // -
@@ -256,9 +257,9 @@ public interface Opcodes {
     int DUP2_X1 = 93; // -
     int DUP2_X2 = 94; // -
     int SWAP = 95; // -
-    int IADD = 96; // -
+    int IADD = 96; // - int 类型数据相加
     int LADD = 97; // -
-    int FADD = 98; // -
+    int FADD = 98; // - float 类型数据相加
     int DADD = 99; // -
     int ISUB = 100; // -
     int LSUB = 101; // -

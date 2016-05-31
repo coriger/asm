@@ -31,6 +31,8 @@ package org.objectweb.asm;
 
 /**
  * An {@link FieldVisitor} that generates Java fields in bytecode form.
+ *
+ * 字段字节码生成器
  * 
  * @author Eric Bruneton
  */

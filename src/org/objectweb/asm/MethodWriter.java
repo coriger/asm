@@ -33,7 +33,9 @@ package org.objectweb.asm;
  * A {@link MethodVisitor} that generates methods in bytecode form. Each visit
  * method of this class appends the bytecode corresponding to the visited
  * instruction to a byte vector, in the order these methods are called.
- * 
+ *
+ * 方法字节码生成器
+ *
  * @author Eric Bruneton
  * @author Eugene Kuleshov
  */

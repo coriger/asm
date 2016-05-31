@@ -54,12 +54,18 @@ public class TypeUnitTest extends TestCase implements Opcodes {
         assertEquals(Type.LONG_TYPE, Type.getType(Long.TYPE));
     }
 
+    /**
+     * Java类内部名
+     */
     public void testInternalName() {
         String s1 = Type.getType(TypeUnitTest.class).getInternalName();
         String s2 = Type.getInternalName(TypeUnitTest.class);
         assertEquals(s1, s2);
     }
 
+    /**
+     * 构造函数描述符
+     */
     public void testConstructorDescriptor() {
         for (int i = 0; i < String.class.getConstructors().length; ++i) {
             Constructor<?> c = String.class.getConstructors()[i];
@@ -67,6 +73,9 @@ public class TypeUnitTest extends TestCase implements Opcodes {
         }
     }
 
+    /**
+     * 方法描述符
+     */
     public void testMethodDescriptor() {
         for (int i = 0; i < Arrays.class.getMethods().length; ++i) {
             Method m = Arrays.class.getMethods()[i];
@@ -78,6 +87,9 @@ public class TypeUnitTest extends TestCase implements Opcodes {
         }
     }
 
+    /**
+     * jvm指令码转换
+     */
     public void testGetOpcode() {
         Type object = Type.getType("Ljava/lang/Object;");
         assertEquals(BALOAD, Type.BOOLEAN_TYPE.getOpcode(IALOAD));
@@ -103,6 +115,10 @@ public class TypeUnitTest extends TestCase implements Opcodes {
         Type.getType("Ljava/lang/Object;").hashCode();
     }
 
+    /**
+     * 指定类的类型对象
+     * @throws Exception
+     */
     public void testObjectType() throws Exception {
         Type t1 = Type.getObjectType("java/lang/Object");
         Type t2 = Type.getType("Ljava/lang/Object;");

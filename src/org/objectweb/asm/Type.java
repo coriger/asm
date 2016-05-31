@@ -35,7 +35,9 @@ import java.lang.reflect.Method;
 /**
  * A Java field or method type. This class can be used to make it easier to
  * manipulate type and method descriptors.
- * 
+ *
+ * 工具类 可以通过它构建字段或者方法类型对象 提供了一些方法可以方便的获取方法描述符
+ *
  * @author Eric Bruneton
  * @author Chris Nokleberg
  */
@@ -107,6 +109,10 @@ public class Type {
     public static final Type VOID_TYPE = new Type(VOID, null, ('V' << 24)
             | (5 << 16) | (0 << 8) | 0, 1);
 
+//    01010110 00000000 00000000 00000000
+//                  101 00000000 00000000
+//    01010110 00000101 00000000 00000000
+
     /**
      * The <tt>boolean</tt> type.
      */
@@ -161,12 +167,14 @@ public class Type {
 
     /**
      * The sort of this Java type.
+     * 类型
      */
     private final int sort;
 
     /**
      * A buffer containing the internal name of this Java type. This field is
      * only used for reference types.
+     * 包含了引用类型内部名 只用于引用类型对象
      */
     private final char[] buf;
 
@@ -180,6 +188,7 @@ public class Type {
 
     /**
      * The length of the internal name of this Java type.
+     * Java类型的内部名长度
      */
     private final int len;
 
@@ -190,13 +199,13 @@ public class Type {
     /**
      * Constructs a reference type.
      * 
-     * @param sort
+     * @param sort  引用类型
      *            the sort of the reference type to be constructed.
-     * @param buf
+     * @param buf   描述符字节数组
      *            a buffer containing the descriptor of the previous type.
-     * @param off
+     * @param off   描述符在buf起始偏移位
      *            the offset of this descriptor in the previous buffer.
-     * @param len
+     * @param len   描述符长度
      *            the length of this descriptor.
      */
     private Type(final int sort, final char[] buf, final int off, final int len) {
@@ -351,6 +360,8 @@ public class Type {
     /**
      * Returns the Java types corresponding to the argument types of the given
      * method.
+     *
+     * 返回某个方法的参数类型
      * 
      * @param method
      *            a method.
@@ -392,6 +403,8 @@ public class Type {
     /**
      * Returns the Java type corresponding to the return type of the given
      * method.
+     *
+     * 返回方法的返回类型
      * 
      * @param method
      *            a method.
@@ -582,7 +595,9 @@ public class Type {
      * array type. The internal name of a class is its fully qualified name (as
      * returned by Class.getName(), where '.' are replaced by '/'. This method
      * should only be used for an object or array type.
-     * 
+     *
+     * 返回内部名
+     *
      * @return the internal name of the class corresponding to this object type.
      */
     public String getInternalName() {
@@ -642,6 +657,8 @@ public class Type {
     /**
      * Returns the descriptor corresponding to the given argument and return
      * types.
+     *
+     * 根据返回类型 参数类型 返回方法描述符
      * 
      * @param returnType
      *            the return type of the method.
@@ -703,7 +720,9 @@ public class Type {
 
     /**
      * Returns the descriptor corresponding to the given Java type.
-     * 
+     *
+     * 返回类描述符
+     *
      * @param c
      *            an object class, a primitive class or an array class.
      * @return the descriptor corresponding to the given class.
@@ -716,7 +735,9 @@ public class Type {
 
     /**
      * Returns the descriptor corresponding to the given constructor.
-     * 
+     *
+     * 返回构造函数的描述符
+     *
      * @param c
      *            a {@link Constructor Constructor} object.
      * @return the descriptor of the given constructor.
@@ -733,7 +754,9 @@ public class Type {
 
     /**
      * Returns the descriptor corresponding to the given method.
-     * 
+     *
+     * 返回方法描述符
+     *
      * @param m
      *            a {@link Method Method} object.
      * @return the descriptor of the given method.
@@ -752,7 +775,9 @@ public class Type {
 
     /**
      * Appends the descriptor of the given class to the given string buffer.
-     * 
+     *
+     * 获取类描述符
+     *
      * @param buf
      *            the string buffer to which the descriptor must be appended.
      * @param c
@@ -761,7 +786,7 @@ public class Type {
     private static void getDescriptor(final StringBuilder buf, final Class<?> c) {
         Class<?> d = c;
         while (true) {
-            if (d.isPrimitive()) {
+            if (d.isPrimitive()) { // 原生类型
                 char car;
                 if (d == Integer.TYPE) {
                     car = 'I';
@@ -784,10 +809,10 @@ public class Type {
                 }
                 buf.append(car);
                 return;
-            } else if (d.isArray()) {
+            } else if (d.isArray()) {  // 数组类型
                 buf.append('[');
                 d = d.getComponentType();
-            } else {
+            } else {    // 其他(对象类型)
                 buf.append('L');
                 String name = d.getName();
                 int len = name.length();
@@ -820,6 +845,8 @@ public class Type {
     /**
      * Returns a JVM instruction opcode adapted to this Java type. This method
      * must not be used for method types.
+     *
+     * 返回适应这个Java类型的jvm指令码  不能被方法类型使用
      * 
      * @param opcode
      *            a JVM instruction opcode. This opcode must be one of ILOAD,
@@ -828,6 +855,8 @@ public class Type {
      * @return an opcode that is similar to the given opcode, but adapted to
      *         this Java type. For example, if this type is <tt>float</tt> and
      *         <tt>opcode</tt> is IRETURN, this method returns FRETURN.
+     *         返回的指令码和给定指令码类似
+     *         比如当前类型是Float 给定指令码是IRETURN 该方法会返回FRETURN
      */
     public int getOpcode(final int opcode) {
         if (opcode == Opcodes.IALOAD || opcode == Opcodes.IASTORE) {

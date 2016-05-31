@@ -41,6 +41,7 @@ import org.objectweb.asm.TypePath;
 
 /**
  * An abstract converter from visit events to text.
+ * 把访问事件转换成文本的抽象转换器
  * 
  * @author Eric Bruneton
  */

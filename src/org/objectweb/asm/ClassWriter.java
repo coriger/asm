@@ -35,7 +35,9 @@ package org.objectweb.asm;
  * file format. It can be used alone, to generate a Java class "from scratch",
  * or with one or more {@link ClassReader ClassReader} and adapter class visitor
  * to generate a modified class from one or more existing Java classes.
- * 
+ *
+ * 生成字节码格式文件
+ *
  * @author Eric Bruneton
  */
 public class ClassWriter extends ClassVisitor {
@@ -294,6 +296,7 @@ public class ClassWriter extends ClassVisitor {
 
     /**
      * The constant pool of this class.
+     * 常量池
      */
     final ByteVector pool;
 
@@ -486,11 +489,13 @@ public class ClassWriter extends ClassVisitor {
     /**
      * <tt>true</tt> if the maximum stack size and number of local variables
      * must be automatically computed.
+     * 是否计算操作数栈和局部变量大小
      */
     private boolean computeMaxs;
 
     /**
      * <tt>true</tt> if the stack map frames must be recomputed from scratch.
+     * 堆栈帧映射是否重头计算
      */
     private boolean computeFrames;
 
@@ -784,12 +789,14 @@ public class ClassWriter extends ClassVisitor {
     @Override
     public final FieldVisitor visitField(final int access, final String name,
             final String desc, final String signature, final Object value) {
+        // 创建一个FieldWriter  字段字节码生成器 并和当前class生成器互相绑定 toByte的时候会用到
         return new FieldWriter(this, access, name, desc, signature, value);
     }
 
     @Override
     public final MethodVisitor visitMethod(final int access, final String name,
             final String desc, final String signature, final String[] exceptions) {
+        // MethodWriter  方法字节码生成器 并和当前class生成器互相绑定 toByte的时候会用到
         return new MethodWriter(this, access, name, desc, signature,
                 exceptions, computeMaxs, computeFrames);
     }
@@ -804,6 +811,8 @@ public class ClassWriter extends ClassVisitor {
 
     /**
      * Returns the bytecode of the class that was build with this class writer.
+     *
+     * 返回通过当前写入器生成的class文件字节数组
      * 
      * @return the bytecode of the class that was build with this class writer.
      */
